@@ -1,7 +1,14 @@
 package dev.panasovsky.module.auth;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+@SpringBootApplication
+public class RunApplication {
+
+    public static void main(final String[] args) {
+        SpringApplication.run(RunApplication.class, args);
     }
+
 }
