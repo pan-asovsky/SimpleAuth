@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public String getHelloMessage() {
         return "<h3>Hello!</h3>";
     }

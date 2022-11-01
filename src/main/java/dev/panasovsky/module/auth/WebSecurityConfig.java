@@ -2,8 +2,8 @@ package dev.panasovsky.module.auth;
 
 import org.springframework.context.annotation.Bean;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,13 +17,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
+        final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password("admin")
+                .password(encoder.encode("admin"))
                 .roles("admin")
                 .and()
                 .withUser("user")
-                .password("user")
+                .password(encoder.encode("user"))
                 .roles("user");
     }
 
@@ -33,13 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin").hasRole("admin")
                 .antMatchers("/user").hasAnyRole("user", "admin")
-                .antMatchers("/hello").permitAll()
+                .antMatchers("/").permitAll()
                 .and().formLogin();
     }
 
     @Bean
     public PasswordEncoder encoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
 }
