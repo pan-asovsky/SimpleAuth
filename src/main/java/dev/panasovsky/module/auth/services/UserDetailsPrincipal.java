@@ -1,9 +1,13 @@
 package dev.panasovsky.module.auth.services;
 
 import dev.panasovsky.module.auth.entities.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -17,7 +21,10 @@ public class UserDetailsPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        final List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority("ROLE_" + user.getUser_role().getRolename()));
+        return roles;
     }
 
     @Override

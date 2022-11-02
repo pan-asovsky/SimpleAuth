@@ -5,16 +5,13 @@ import dev.panasovsky.module.auth.entities.User;
 import dev.panasovsky.module.auth.services.UserService;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @RestController
@@ -48,6 +45,7 @@ public class MainController {
 
     @PostMapping("/adduser")
     public User addUser(@RequestBody final User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userService.addUser(user);
     }
 
