@@ -19,8 +19,6 @@ public class User {
     private int id;
     private String login;
     private String password;
-    private Date created_date;
-    private Date last_session;
 
     @ManyToOne
     @JoinColumn(name = "user_role")
