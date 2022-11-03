@@ -5,7 +5,6 @@ import dev.panasovsky.module.auth.entities.User;
 import dev.panasovsky.module.auth.services.UserService;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final UserService userService;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private UserService userService;
+    public MainController(final RoleRepository roleRepository, final UserService userService) {
+        this.userService = userService;
+        this.roleRepository = roleRepository;
+    }
 
     @GetMapping("/")
     public String getHelloMessage() {
