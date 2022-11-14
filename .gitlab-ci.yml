@@ -1,7 +1,7 @@
 image: maven:latest
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
-#   PROJECT_DIR: /builds/zPwSEYWs/0/spf-development/store-platform
+  PROJECT_DIR: .
 
 stages:
   - build
