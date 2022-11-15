@@ -1,0 +1,83 @@
+image: maven:latest
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
+  PROJECT_DIR: .
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+# build:
+#   stage: build
+#   only: 
+#     - develop
+#     - merge_request
+#     - /^release\/.*$/
+#   except:
+#     - tags
+#   script:
+#     - 'mvn compile'
+#   cache:
+#     paths:
+#       - ./target
+#       - ./.m2
+
+test:
+  stage: test
+  only:
+    - master
+    - develop
+    - merge_request
+    - /^release\/.*$/
+  except:
+    - tags
+  script:
+    - 'mvn test'
+  cache:
+    paths:
+      - ./target/*
+      - ./.m2
+
+package:
+  stage: package
+  only:
+    - develop
+    - /^release\/.*$/
+    - master
+  except:
+    - tags
+  script:
+    - 'mvn package -Dmaven.test.skip=true'
+  after_script:
+    - 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
+    - 'chmod +x codecov'
+    - './codecov -f ${PROJECT_DIR}/target/site/jacoco/jacoco.xml'
+  artifacts:
+    paths: 
+      - target/*.jar
+    expire_in: 1 days
+  cache:
+    policy: pull
+    paths:
+      - ./target
+      - ./.m2
+
+# deploy:
+#   stage: deploy
+#   only: 
+#     - develop
+#   except:
+#     - tags
+#   before_script:
+#     - which ssh-agent || ( apt update -y && apt install openssh-client -y )
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" | ssh-add -
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - ssh-keyscan $DEV_HOST >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - ssh $DEV_USER@$DEV_HOST "[ ! -f $DEV_APP_PATH/spf-*.jar ] || mv $DEV_APP_PATH/spf-build-$CI_PIPELINE_ID.jar"
+#     - scp target/spf-*.jar $DEV_USER@$DEV_HOST:$DEV_APP_PATH/
