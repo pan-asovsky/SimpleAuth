@@ -3,7 +3,6 @@ package dev.panasovsky.module.auth.config;
 import dev.panasovsky.module.auth.services.UserService;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,7 +23,7 @@ public class SecurityConfig {
 
     private final UserService userService;
 
-    // TODO: Get rid of it, please!
+    // TODO: Get rid of it!
     @Bean
     public SecurityFilterChain configureSecurity(final HttpSecurity http) throws Exception {
         return http.csrf().disable().formLogin(Customizer.withDefaults()).build();
