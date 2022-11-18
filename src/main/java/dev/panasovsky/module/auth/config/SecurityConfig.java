@@ -7,34 +7,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
-import org.springframework.security.config.Customizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 
 @Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final UserService userService;
 
+    // TODO: Get rid of it, please!
     @Bean
     public SecurityFilterChain configureSecurity(final HttpSecurity http) throws Exception {
-
-        return http.csrf().disable()
-                .authorizeRequests(auth -> {
-                    auth.antMatchers("/").permitAll();
-                    auth.antMatchers("/user").hasAnyRole("user", "admin");
-                    auth.antMatchers("/admin").hasRole("admin");
-                })
-                .formLogin(Customizer.withDefaults()).build();
+        return http.csrf().disable().formLogin(Customizer.withDefaults()).build();
     }
 
     @Bean
