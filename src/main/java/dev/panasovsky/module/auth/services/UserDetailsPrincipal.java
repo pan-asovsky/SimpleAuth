@@ -2,6 +2,8 @@ package dev.panasovsky.module.auth.services;
 
 import dev.panasovsky.module.auth.entities.User;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,13 +13,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
+@RequiredArgsConstructor
 public class UserDetailsPrincipal implements UserDetails {
 
     private final User user;
-
-    public UserDetailsPrincipal(final User user) {
-        this.user = user;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -2,6 +2,8 @@ package dev.panasovsky.module.auth.config;
 
 import dev.panasovsky.module.auth.services.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,13 +20,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final UserService userService;
-
-    public SecurityConfig(final UserService userService) {
-        this.userService = userService;
-    }
 
     @Bean
     public SecurityFilterChain configureSecurity(final HttpSecurity http) throws Exception {

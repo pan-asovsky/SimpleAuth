@@ -5,6 +5,7 @@ import dev.panasovsky.module.auth.entities.User;
 import dev.panasovsky.module.auth.services.UserService;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@RequiredArgsConstructor
 public class MainController {
 
     private final UserService userService;
     private final RoleRepository roleRepository;
-
-    public MainController(final RoleRepository roleRepository, final UserService userService) {
-        this.userService = userService;
-        this.roleRepository = roleRepository;
-    }
 
     @GetMapping("/")
     public String getHelloMessage() {

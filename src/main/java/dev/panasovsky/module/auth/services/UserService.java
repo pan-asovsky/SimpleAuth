@@ -3,6 +3,7 @@ package dev.panasovsky.module.auth.services;
 import dev.panasovsky.module.auth.entities.User;
 import dev.panasovsky.module.auth.repositories.UserRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,13 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    public UserService(final UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
