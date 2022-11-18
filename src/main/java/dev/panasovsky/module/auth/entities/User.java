@@ -1,9 +1,9 @@
 package dev.panasovsky.module.auth.entities;
 
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 
 @Getter
