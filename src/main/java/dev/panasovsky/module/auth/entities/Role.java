@@ -1,8 +1,9 @@
 package dev.panasovsky.module.auth.entities;
 
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.*;
 
 
 @Getter
@@ -15,6 +16,7 @@ public class Role {
     @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String rolename;
 
 }

@@ -2,6 +2,8 @@ package dev.panasovsky.module.auth.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 import javax.persistence.*;
 
 
@@ -12,11 +14,12 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private UUID id;
+
     private String login;
     private String password;
+
     @ManyToOne
     @JoinColumn(name = "user_role")
     private Role user_role;
