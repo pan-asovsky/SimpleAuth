@@ -1,6 +1,6 @@
 package dev.panasovsky.module.auth.repositories;
 
-import dev.panasovsky.module.auth.entities.User;
+import dev.panasovsky.module.auth.model.User;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;

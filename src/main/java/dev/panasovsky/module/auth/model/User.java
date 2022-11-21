@@ -1,4 +1,4 @@
-package dev.panasovsky.module.auth.entities;
+package dev.panasovsky.module.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
