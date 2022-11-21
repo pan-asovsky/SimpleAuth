@@ -47,7 +47,7 @@ public class MainController {
 
     @PostMapping("/register")
     public String register(@RequestBody final User user) {
-        return userService.registerUser(user);
+        return userService.register(user);
     }
 
 }
