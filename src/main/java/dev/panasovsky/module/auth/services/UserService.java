@@ -1,6 +1,7 @@
 package dev.panasovsky.module.auth.services;
 
-import dev.panasovsky.module.auth.entities.User;
+import dev.panasovsky.module.auth.model.Role;
+import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,18 @@ public class UserService implements UserDetailsService {
     public String register(final User user) {
 
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        if (user.getUser_role() == null) setRoleUser(user);
+
         final User addUser = addUser(user);
         return "Successfully registered " + addUser.getLogin();
+    }
+
+    private void setRoleUser(final User user) {
+
+        final Role userRole = new Role();
+        userRole.setId(2);
+        userRole.setRolename("USER");
+        user.setUser_role(userRole);
     }
 
     private User addUser(final User user) {
