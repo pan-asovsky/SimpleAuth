@@ -1,7 +1,7 @@
 package dev.panasovsky.module.auth.controllers;
 
-import dev.panasovsky.module.auth.entities.Role;
-import dev.panasovsky.module.auth.entities.User;
+import dev.panasovsky.module.auth.model.Role;
+import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.services.UserService;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
