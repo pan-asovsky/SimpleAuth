@@ -39,14 +39,14 @@ public class MainController {
         return "<h3>Hello, admin!</h3>";
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addrole")
     public Role addRole(@RequestBody final Role role) {
         return roleRepository.save(role);
     }
 
     @PostMapping("/register")
-    public String addUser(@RequestBody final User user) {
+    public String register(@RequestBody final User user) {
         return userService.registerUser(user);
     }
 
