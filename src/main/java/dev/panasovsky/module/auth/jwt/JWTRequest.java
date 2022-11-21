@@ -1,4 +1,4 @@
-package dev.panasovsky.module.auth;
+package dev.panasovsky.module.auth.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
