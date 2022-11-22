@@ -4,6 +4,7 @@ import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.repositories.UserRepository;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Optional;
 
 
 @Service
@@ -24,6 +27,10 @@ public class UserService implements UserDetailsService {
 
         final User user = userRepository.findByLogin(login);
         return new UserDetailsPrincipal(user);
+    }
+
+    public User getByLogin(final String login) {
+        return userRepository.findByLogin(login);
     }
 
     public String register(final User user) {
