@@ -12,9 +12,7 @@ stages:
 build:
   stage: build
   only: 
-    - develop
-    - merge_request
-    - /^release\/.*$/
+    - branches
   except:
     - tags
   script:
@@ -27,10 +25,7 @@ build:
 test:
   stage: test
   only:
-    - master
-    - develop
-    - merge_request
-    - /^release\/.*$/
+    - branches
   except:
     - tags
   script:
@@ -43,9 +38,7 @@ test:
 package:
   stage: package
   only:
-    - develop
-    - /^release\/.*$/
-    - master
+    - branches
   except:
     - tags
   script:
