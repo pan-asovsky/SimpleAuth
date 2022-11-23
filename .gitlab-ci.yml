@@ -12,7 +12,7 @@ stages:
 build:
   stage: build
   only: 
-    - develop
+    - AUTH\/.*$/
     - merge_request
     - /^release\/.*$/
   except:
