@@ -30,8 +30,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final UserService userService;
 
-
-    // TODO: Get rid of it!
+    
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 

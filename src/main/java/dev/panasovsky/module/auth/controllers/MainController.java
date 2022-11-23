@@ -62,6 +62,7 @@ public class MainController {
 
     // ---
 
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addrole")
     public Role addRole(@RequestBody final Role role) {

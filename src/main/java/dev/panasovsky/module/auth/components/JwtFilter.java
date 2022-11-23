@@ -5,8 +5,8 @@ import dev.panasovsky.module.auth.util.JwtAuthentication;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Component;
+
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.security.core.context.SecurityContextHolder;
