@@ -28,6 +28,8 @@ test:
     - branches
   except:
     - tags
+  needs:
+    - build
   script:
     - 'mvn test -Pdev'
   cache:
@@ -41,6 +43,8 @@ package:
     - branches
   except:
     - tags
+  needs:
+    - test
   script:
     - 'mvn package -Dmaven.test.skip=true -Pdev'
   after_script:
