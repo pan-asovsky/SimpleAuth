@@ -1,6 +1,5 @@
-package dev.panasovsky.module.auth.util;
+package dev.panasovsky.module.auth.jwt;
 
-import dev.panasovsky.module.auth.jwt.Role;
 import io.jsonwebtoken.Claims;
 
 import java.util.List;

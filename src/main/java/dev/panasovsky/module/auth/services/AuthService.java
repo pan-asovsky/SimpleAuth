@@ -4,7 +4,7 @@ import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.jwt.JWTRequest;
 import dev.panasovsky.module.auth.jwt.JwtResponse;
 import dev.panasovsky.module.auth.components.JwtProvider;
-import dev.panasovsky.module.auth.util.JwtAuthentication;
+import dev.panasovsky.module.auth.jwt.JwtAuthentication;
 import dev.panasovsky.module.auth.exceptions.AuthException;
 
 import lombok.NonNull;

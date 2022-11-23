@@ -1,7 +1,7 @@
 package dev.panasovsky.module.auth.components;
 
-import dev.panasovsky.module.auth.util.JwtUtils;
-import dev.panasovsky.module.auth.util.JwtAuthentication;
+import dev.panasovsky.module.auth.jwt.JwtUtils;
+import dev.panasovsky.module.auth.jwt.JwtAuthentication;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;

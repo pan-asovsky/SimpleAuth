@@ -1,6 +1,4 @@
-package dev.panasovsky.module.auth.util;
-
-import dev.panasovsky.module.auth.jwt.Role;
+package dev.panasovsky.module.auth.jwt;
 
 import lombok.*;
 

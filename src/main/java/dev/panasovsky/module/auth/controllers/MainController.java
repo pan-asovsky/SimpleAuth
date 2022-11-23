@@ -4,7 +4,7 @@ import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.services.AuthService;
 import dev.panasovsky.module.auth.services.UserService;
-import dev.panasovsky.module.auth.util.JwtAuthentication;
+import dev.panasovsky.module.auth.jwt.JwtAuthentication;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
