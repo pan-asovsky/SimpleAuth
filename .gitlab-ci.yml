@@ -12,7 +12,7 @@ stages:
 build:
   stage: build
   only: 
-    - AUTH\/.*$/
+    - AUTH[-]\d{0,9}
     - merge_request
     - /^release\/.*$/
   except:
@@ -28,7 +28,7 @@ test:
   stage: test
   only:
     - master
-    - develop
+    - AUTH[-]\d{0,9}
     - merge_request
     - /^release\/.*$/
   except:
@@ -43,7 +43,7 @@ test:
 package:
   stage: package
   only:
-    - develop
+    - AUTH[-]\d{0,9}
     - /^release\/.*$/
     - master
   except:
@@ -67,7 +67,7 @@ package:
 # deploy:
 #   stage: deploy
 #   only: 
-#     - develop
+#     - AUTH[-]\d{0,9}
 #   except:
 #     - tags
 #   before_script:
