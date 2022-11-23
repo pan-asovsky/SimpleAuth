@@ -11,10 +11,8 @@ stages:
 
 build:
   stage: build
-  # only: 
-  #   - AUTH-\d{0,4}
-  #   - merge_request
-  #   - /^release\/.*$/
+  only: 
+    - branches
   except:
     - tags
   script:
@@ -26,11 +24,8 @@ build:
 
 test:
   stage: test
-  # only:
-  #   - master
-  #   - AUTH-\d{0,4}
-  #   - merge_request
-  #   - /^release\/.*$/
+  only: 
+    - branches
   except:
     - tags
   script:
@@ -42,10 +37,8 @@ test:
 
 package:
   stage: package
-  # only:
-  #   - AUTH-\d{0,4}
-  #   - /^release\/.*$/
-  #   - master
+  only: 
+    - branches
   except:
     - tags
   script:
