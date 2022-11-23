@@ -1,13 +1,10 @@
-package dev.panasovsky.module.auth.jwt;
+package dev.panasovsky.module.auth.components;
 
 import dev.panasovsky.module.auth.model.User;
 
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
 import lombok.NonNull;
@@ -30,6 +27,7 @@ public class JwtProvider {
 
     private final SecretKey jwtAccessSecret;
     private final SecretKey jwtRefreshSecret;
+
 
     public JwtProvider(
             @Value("${jwt.secret.access}") final String jwtAccessSecret,
@@ -97,8 +95,24 @@ public class JwtProvider {
         } catch (final Exception e) {
             log.error("Invalid token: ", e);
         }
-
         return false;
+    }
+
+    public Claims getAccessClaims(@NonNull final String token) {
+        return getClaims(token, jwtAccessSecret);
+    }
+
+    public Claims getRefreshClaims(@NonNull final String token) {
+        return getClaims(token, jwtRefreshSecret);
+    }
+
+    private Claims getClaims(@NonNull final String token, @NonNull final Key secret) {
+
+        return Jwts.parserBuilder()
+                .setSigningKey(secret)
+                .build()
+                .parseClaimsJwt(token)
+                .getBody();
     }
 
 }

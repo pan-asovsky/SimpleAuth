@@ -1,7 +1,7 @@
 package dev.panasovsky.module.auth.jwt;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 
 @Getter

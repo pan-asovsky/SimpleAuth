@@ -2,16 +2,16 @@ package dev.panasovsky.module.auth.controllers;
 
 import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
+import dev.panasovsky.module.auth.services.AuthService;
 import dev.panasovsky.module.auth.services.UserService;
+import dev.panasovsky.module.auth.util.JwtAuthentication;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
 
     private final UserService userService;
+    private final AuthService authService;
     private final RoleRepository roleRepository;
 
 
@@ -38,6 +39,28 @@ public class MainController {
     public String getHelloMessageForAdmin() {
         return "<h3>Hello, admin!</h3>";
     }
+
+    // ---
+    // TODO: decode пароля в AuthService#login()
+    // TODO: разобраться с классами Role
+    // TODO: выдавать токен при регистрации?
+    // TODO: разобраться с SecurityConfig#filterChain()
+    // TODO: добавить поля регистрации (имя, почта и т.д)
+    @PreAuthorize("hasAuthority('USER')")
+    @GetMapping("/hello/user")
+    public ResponseEntity<String> helloUser() {
+        final JwtAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello user " + authInfo.getPrincipal() + "!");
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/hello/admin")
+    public ResponseEntity<String> helloAdmin() {
+        final JwtAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello admin " + authInfo.getPrincipal() + "!");
+    }
+
+    // ---
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addrole")
