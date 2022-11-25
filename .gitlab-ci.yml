@@ -12,9 +12,7 @@ stages:
 build:
   stage: build
   only: 
-    - develop
-    - merge_request
-    - /^release\/.*$/
+    - branches
   except:
     - tags
   script:
@@ -27,12 +25,11 @@ build:
 test:
   stage: test
   only:
-    - master
-    - develop
-    - merge_request
-    - /^release\/.*$/
+    - branches
   except:
     - tags
+  needs:
+    - build
   script:
     - 'mvn test -Pdev'
   cache:
@@ -43,11 +40,11 @@ test:
 package:
   stage: package
   only:
-    - develop
-    - /^release\/.*$/
-    - master
+    - branches
   except:
     - tags
+  needs:
+    - test
   script:
     - 'mvn package -Dmaven.test.skip=true -Pdev'
   after_script:
