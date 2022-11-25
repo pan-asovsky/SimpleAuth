@@ -1,15 +1,24 @@
 package dev.panasovsky.module.auth.jwt;
 
+import dev.panasovsky.module.auth.model.Role;
+import dev.panasovsky.module.auth.repositories.RoleRepository;
+
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.HashSet;
 
 
+@Component
+@RequiredArgsConstructor
 public class JwtUtils {
 
-    public static JwtAuthentication generate(final Claims claims) {
+    private final RoleRepository roleRepository;
+
+
+    public JwtAuthentication generate(final Claims claims) {
 
         final JwtAuthentication jwtInfoToken = new JwtAuthentication();
         jwtInfoToken.setRoles(getRoles(claims));
@@ -18,12 +27,13 @@ public class JwtUtils {
         return jwtInfoToken;
     }
 
-    private static Set<Role> getRoles(final Claims claims) {
+    private Set<Role> getRoles(final Claims claims) {
 
-        final List<String> roles = claims.get("roles", List.class);
-        return roles.stream()
-                .map(Role::valueOf)
-                .collect(Collectors.toSet());
+        final String rolename = claims.get("role", String.class);
+
+        final Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findByRolename(rolename));
+        return roles;
     }
 
 }

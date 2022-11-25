@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
 
+    private final JwtUtils jwtUtils;
     private final JwtProvider jwtProvider;
     private final static String AUTHORIZATION = "Authorization";
 
@@ -39,7 +40,7 @@ public class JwtFilter extends GenericFilterBean {
         final String token = getTokenFromRequest((HttpServletRequest) request);
         if (token != null && jwtProvider.validateAccessToken(token)) {
             final Claims claims = jwtProvider.getAccessClaims(token);
-            final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims);
+            final JwtAuthentication jwtInfoToken = jwtUtils.generate(claims);
             jwtInfoToken.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
         }

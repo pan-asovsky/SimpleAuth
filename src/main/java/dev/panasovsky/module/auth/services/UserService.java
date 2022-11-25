@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,11 @@ public class UserService implements UserDetailsService {
 
     public User getByLogin(final String login) {
         return userRepository.findByLogin(login);
+    }
+
+    public User getById(final String id) {
+        return userRepository.findById(UUID.fromString(id));
+
     }
 
     public String register(final User user) {

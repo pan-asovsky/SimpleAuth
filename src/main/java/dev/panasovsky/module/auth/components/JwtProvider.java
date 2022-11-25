@@ -45,11 +45,11 @@ public class JwtProvider {
         final Date accessExpiration = Date.from(accessExpirationInstant);
 
         return Jwts.builder()
-                .setSubject(user.getId().toString())
                 .setSubject(user.getLogin())
+                .setId(user.getId().toString())
                 .setExpiration(accessExpiration)
                 .signWith(jwtAccessSecret)
-                .claim("userRole", user.getUser_role())
+                .claim("role", user.getUser_role().getRolename())
                 .compact();
     }
 
@@ -61,7 +61,8 @@ public class JwtProvider {
         final Date refreshExpiration = Date.from(refreshExpirationInstant);
 
         return Jwts.builder()
-                .setSubject(user.getId().toString())
+                .setSubject(user.getLogin())
+                .setId(user.getId().toString())
                 .setExpiration(refreshExpiration)
                 .signWith(jwtRefreshSecret)
                 .compact();
@@ -82,7 +83,7 @@ public class JwtProvider {
             Jwts.parserBuilder()
                     .setSigningKey(secret)
                     .build()
-                    .parseClaimsJwt(token);
+                    .parseClaimsJws(token);
             return true;
         } catch (final ExpiredJwtException expEx) {
             log.error("Token expired: ", expEx);
@@ -111,7 +112,7 @@ public class JwtProvider {
         return Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 

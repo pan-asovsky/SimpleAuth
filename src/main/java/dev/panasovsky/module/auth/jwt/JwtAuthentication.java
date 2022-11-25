@@ -1,7 +1,8 @@
 package dev.panasovsky.module.auth.jwt;
 
-import lombok.*;
+import dev.panasovsky.module.auth.model.Role;
 
+import lombok.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 

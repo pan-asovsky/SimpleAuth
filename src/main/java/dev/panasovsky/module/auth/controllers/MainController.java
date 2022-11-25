@@ -41,23 +41,25 @@ public class MainController {
     }
 
     // ---
-    // TODO: decode пароля в AuthService#login()
-    // TODO: разобраться с классами Role
+    // TODO: постоянное хранилище для refresh-токенов. Redis?
+    // TODO: Postman-коллекция для автотестов.
     // TODO: выдавать токен при регистрации?
     // TODO: разобраться с SecurityConfig#filterChain()
     // TODO: добавить поля регистрации (имя, почта и т.д)
-    @PreAuthorize("hasAuthority('USER')")
-    @GetMapping("/hello/user")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @GetMapping("/api/hello/user")
     public ResponseEntity<String> helloUser() {
+
         final JwtAuthentication authInfo = authService.getAuthInfo();
-        return ResponseEntity.ok("Hello user " + authInfo.getPrincipal() + "!");
+        return ResponseEntity.ok("Hello user " + authInfo.getLogin() + "!");
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/hello/admin")
+    @GetMapping("/api/hello/admin")
     public ResponseEntity<String> helloAdmin() {
+
         final JwtAuthentication authInfo = authService.getAuthInfo();
-        return ResponseEntity.ok("Hello admin " + authInfo.getPrincipal() + "!");
+        return ResponseEntity.ok("Hello admin " + authInfo.getLogin() + "!");
     }
 
     // ---

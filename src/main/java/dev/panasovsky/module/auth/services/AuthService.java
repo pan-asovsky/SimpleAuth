@@ -3,16 +3,18 @@ package dev.panasovsky.module.auth.services;
 import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.jwt.JWTRequest;
 import dev.panasovsky.module.auth.jwt.JwtResponse;
-import dev.panasovsky.module.auth.components.JwtProvider;
 import dev.panasovsky.module.auth.jwt.JwtAuthentication;
+import dev.panasovsky.module.auth.components.JwtProvider;
 import dev.panasovsky.module.auth.exceptions.AuthException;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import io.jsonwebtoken.Claims;
+
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -31,11 +33,12 @@ public class AuthService {
 
         final User user = userService.getByLogin(authRequest.getLogin());
 
-        if (user.getPassword().equals(authRequest.getPassword())) {
+        final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (encoder.matches(authRequest.getPassword(), user.getPassword())) {
             final String accessToken = jwtProvider.generateAccessToken(user);
             final String refreshToken = jwtProvider.generateRefreshToken(user);
 
-            refreshStorage.put(user.getLogin(), refreshToken);
+            refreshStorage.put(user.getId().toString(), refreshToken);
             return new JwtResponse(accessToken, refreshToken);
         } else {
             throw new AuthException("Wrong password!");
@@ -46,11 +49,11 @@ public class AuthService {
 
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
-            final String login = claims.getSubject();
-            final String savedRefreshToken = refreshStorage.get(login);
+            final String id = claims.getId();
+            final String savedRefreshToken = refreshStorage.get(id);
 
             if (savedRefreshToken != null && savedRefreshToken.equals(refreshToken)) {
-                final User user = userService.getByLogin(login);
+                final User user = userService.getById(id);
                 final String accessToken = jwtProvider.generateAccessToken(user);
                 return new JwtResponse(accessToken, null);
             }
@@ -62,15 +65,15 @@ public class AuthService {
 
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
-            final String login = claims.getSubject();
-            final String savedRefreshToken = refreshStorage.get(login);
+            final String id = claims.getId();
+            final String savedRefreshToken = refreshStorage.get(id);
 
             if (savedRefreshToken != null && savedRefreshToken.equals(refreshToken)) {
-                final User user = userService.getByLogin(login);
+                final User user = userService.getById(id);
                 final String accessToken = jwtProvider.generateAccessToken(user);
                 final String newRefreshToken = jwtProvider.generateRefreshToken(user);
 
-                refreshStorage.put(login, newRefreshToken);
+                refreshStorage.put(id, newRefreshToken);
                 return new JwtResponse(accessToken, newRefreshToken);
             }
         }

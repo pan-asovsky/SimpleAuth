@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class RefreshJwtRequest {
 
+    private String login;
     private String refreshToken;
 
 }
