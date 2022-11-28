@@ -1,6 +1,4 @@
-package dev.panasovsky.module.auth.util;
-
-import dev.panasovsky.module.auth.model.User;
+package dev.panasovsky.module.auth.model;
 
 import lombok.RequiredArgsConstructor;
 

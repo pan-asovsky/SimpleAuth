@@ -1,9 +1,7 @@
 package dev.panasovsky.module.auth.components;
 
-import dev.panasovsky.module.auth.jwt.JwtUtils;
-import dev.panasovsky.module.auth.jwt.JwtAuthentication;
+import dev.panasovsky.module.auth.model.jwt.JwtAuthentication;
 
-import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
@@ -34,8 +31,7 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(final ServletRequest request,
                          final ServletResponse response,
-                         final FilterChain filterChain)
-            throws IOException, ServletException {
+                         final FilterChain filterChain) throws IOException, ServletException {
 
         final String token = getTokenFromRequest((HttpServletRequest) request);
         if (token != null && jwtProvider.validateAccessToken(token)) {

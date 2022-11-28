@@ -1,4 +1,4 @@
-package dev.panasovsky.module.auth.jwt;
+package dev.panasovsky.module.auth.model.jwt;
 
 import dev.panasovsky.module.auth.model.Role;
 

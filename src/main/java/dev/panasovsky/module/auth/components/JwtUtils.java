@@ -1,5 +1,6 @@
-package dev.panasovsky.module.auth.jwt;
+package dev.panasovsky.module.auth.components;
 
+import dev.panasovsky.module.auth.model.jwt.JwtAuthentication;
 import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 

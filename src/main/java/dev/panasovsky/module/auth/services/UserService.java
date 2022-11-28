@@ -2,7 +2,7 @@ package dev.panasovsky.module.auth.services;
 
 import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
-import dev.panasovsky.module.auth.util.UserDetailsPrincipal;
+import dev.panasovsky.module.auth.model.UserDetailsPrincipal;
 import dev.panasovsky.module.auth.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;

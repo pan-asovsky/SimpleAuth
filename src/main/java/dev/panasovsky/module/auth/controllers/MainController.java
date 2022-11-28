@@ -4,7 +4,7 @@ import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.services.AuthService;
 import dev.panasovsky.module.auth.services.UserService;
-import dev.panasovsky.module.auth.jwt.JwtAuthentication;
+import dev.panasovsky.module.auth.model.jwt.JwtAuthentication;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -42,10 +42,8 @@ public class MainController {
 
     // ---
     // TODO: постоянное хранилище для refresh-токенов. Redis?
-    // TODO: Postman-коллекция для автотестов.
     // TODO: выдавать токен при регистрации?
     // TODO: разобраться с SecurityConfig#filterChain()
-    // TODO: добавить поля регистрации (имя, почта и т.д)
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @GetMapping("/api/hello/user")
     public ResponseEntity<String> helloUser() {

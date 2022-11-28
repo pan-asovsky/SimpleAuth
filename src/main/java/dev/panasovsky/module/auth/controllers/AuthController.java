@@ -1,9 +1,9 @@
 package dev.panasovsky.module.auth.controllers;
 
-import dev.panasovsky.module.auth.jwt.JWTRequest;
-import dev.panasovsky.module.auth.jwt.JwtResponse;
+import dev.panasovsky.module.auth.model.jwt.JWTRequest;
+import dev.panasovsky.module.auth.model.jwt.JwtResponse;
 import dev.panasovsky.module.auth.services.AuthService;
-import dev.panasovsky.module.auth.jwt.RefreshJwtRequest;
+import dev.panasovsky.module.auth.model.jwt.RefreshJwtRequest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
