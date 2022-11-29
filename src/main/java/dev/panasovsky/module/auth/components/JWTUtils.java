@@ -1,6 +1,6 @@
 package dev.panasovsky.module.auth.components;
 
-import dev.panasovsky.module.auth.model.jwt.JwtAuthentication;
+import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
 import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
@@ -14,14 +14,14 @@ import java.util.HashSet;
 
 @Component
 @RequiredArgsConstructor
-public class JwtUtils {
+public class JWTUtils {
 
     private final RoleRepository roleRepository;
 
 
-    public JwtAuthentication generate(final Claims claims) {
+    public JWTAuthentication generate(final Claims claims) {
 
-        final JwtAuthentication jwtInfoToken = new JwtAuthentication();
+        final JWTAuthentication jwtInfoToken = new JWTAuthentication();
         jwtInfoToken.setRoles(getRoles(claims));
         jwtInfoToken.setLogin(claims.getSubject());
 

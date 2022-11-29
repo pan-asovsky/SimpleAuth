@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Component
-public class JwtProvider {
+public class JWTProvider {
 
     @Value("${jwt.access.public}")
     private RSAPublicKey jwtAccessPublic;

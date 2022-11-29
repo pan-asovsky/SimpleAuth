@@ -1,6 +1,6 @@
 package dev.panasovsky.module.auth.config;
 
-import dev.panasovsky.module.auth.components.JwtFilter;
+import dev.panasovsky.module.auth.components.JWTFilter;
 import dev.panasovsky.module.auth.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+    private final JWTFilter jwtFilter;
     private final UserService userService;
 
     

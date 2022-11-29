@@ -4,7 +4,7 @@ import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.services.AuthService;
 import dev.panasovsky.module.auth.services.UserService;
-import dev.panasovsky.module.auth.model.jwt.JwtAuthentication;
+import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ public class MainController {
     @GetMapping("/api/hello/user")
     public ResponseEntity<String> helloUser() {
 
-        final JwtAuthentication authInfo = authService.getAuthInfo();
+        final JWTAuthentication authInfo = authService.getAuthInfo();
         return ResponseEntity.ok("Hello user " + authInfo.getLogin() + "!");
     }
 
@@ -56,7 +56,7 @@ public class MainController {
     @GetMapping("/api/hello/admin")
     public ResponseEntity<String> helloAdmin() {
 
-        final JwtAuthentication authInfo = authService.getAuthInfo();
+        final JWTAuthentication authInfo = authService.getAuthInfo();
         return ResponseEntity.ok("Hello admin " + authInfo.getLogin() + "!");
     }
 

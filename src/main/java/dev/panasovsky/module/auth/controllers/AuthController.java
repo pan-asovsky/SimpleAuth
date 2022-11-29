@@ -1,9 +1,9 @@
 package dev.panasovsky.module.auth.controllers;
 
 import dev.panasovsky.module.auth.model.jwt.JWTRequest;
-import dev.panasovsky.module.auth.model.jwt.JwtResponse;
+import dev.panasovsky.module.auth.model.jwt.JWTResponse;
 import dev.panasovsky.module.auth.services.AuthService;
-import dev.panasovsky.module.auth.model.jwt.RefreshJwtRequest;
+import dev.panasovsky.module.auth.model.jwt.RefreshJWTRequest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,27 +24,27 @@ public class AuthController {
 
 
     @PostMapping("login")
-    public ResponseEntity<JwtResponse> login(
+    public ResponseEntity<JWTResponse> login(
             @RequestBody final JWTRequest authRequest) {
 
-        final JwtResponse token = authService.login(authRequest);
+        final JWTResponse token = authService.login(authRequest);
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("token")
-    public ResponseEntity<JwtResponse> getNewAccessToken(
-            @RequestBody final RefreshJwtRequest request) {
+    public ResponseEntity<JWTResponse> getNewAccessToken(
+            @RequestBody final RefreshJWTRequest request) {
 
-        final JwtResponse accessToken = authService.getAccessToken(request.getRefreshToken());
+        final JWTResponse accessToken = authService.getAccessToken(request.getRefreshToken());
         return ResponseEntity.ok(accessToken);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("refresh")
-    public ResponseEntity<JwtResponse> getNewRefreshToken(
-            @RequestBody final RefreshJwtRequest request) {
+    public ResponseEntity<JWTResponse> getNewRefreshToken(
+            @RequestBody final RefreshJWTRequest request) {
 
-        final JwtResponse newRefreshToken = authService.refresh(request.getRefreshToken());
+        final JWTResponse newRefreshToken = authService.refresh(request.getRefreshToken());
         return ResponseEntity.ok(newRefreshToken);
     }
 

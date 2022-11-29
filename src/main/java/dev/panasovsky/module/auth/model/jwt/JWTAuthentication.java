@@ -13,7 +13,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class JwtAuthentication implements Authentication {
+public class JWTAuthentication implements Authentication {
 
     private String login;
     private Set<Role> roles;

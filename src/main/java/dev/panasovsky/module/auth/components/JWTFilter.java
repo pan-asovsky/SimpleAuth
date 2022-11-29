@@ -1,6 +1,6 @@
 package dev.panasovsky.module.auth.components;
 
-import dev.panasovsky.module.auth.model.jwt.JwtAuthentication;
+import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class JWTFilter extends GenericFilterBean {
 
-    private final JwtUtils jwtUtils;
-    private final JwtProvider jwtProvider;
+    private final JWTUtils jwtUtils;
+    private final JWTProvider jwtProvider;
     private final static String AUTHORIZATION = "Authorization";
 
 
@@ -36,7 +36,7 @@ public class JwtFilter extends GenericFilterBean {
         final String token = getTokenFromRequest((HttpServletRequest) request);
         if (token != null && jwtProvider.validateAccessToken(token)) {
             final Claims claims = jwtProvider.getAccessClaims(token);
-            final JwtAuthentication jwtInfoToken = jwtUtils.generate(claims);
+            final JWTAuthentication jwtInfoToken = jwtUtils.generate(claims);
             jwtInfoToken.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
         }
