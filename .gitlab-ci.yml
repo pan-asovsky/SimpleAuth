@@ -64,7 +64,7 @@ package:
 # deploy:
 #   stage: deploy
 #   only: 
-#     - develop
+#     - AUTH-\d{0,4}
 #   except:
 #     - tags
 #   before_script:
