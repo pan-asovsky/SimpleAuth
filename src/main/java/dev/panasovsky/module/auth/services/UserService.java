@@ -41,13 +41,13 @@ public class UserService implements UserDetailsService {
     public String register(final User user) {
 
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        if (user.getUser_role() == null) setRoleUser(user);
+        if (user.getUser_role() == null) setUserRole(user);
 
         final User addUser = addUser(user);
         return "Successfully registered " + addUser.getLogin();
     }
 
-    private void setRoleUser(final User user) {
+    private void setUserRole(final User user) {
 
         final Role userRole = new Role();
         userRole.setId(2);

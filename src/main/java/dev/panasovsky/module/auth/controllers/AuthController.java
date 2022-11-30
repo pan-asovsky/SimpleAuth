@@ -1,10 +1,12 @@
 package dev.panasovsky.module.auth.controllers;
 
+import dev.panasovsky.module.auth.model.User;
 import dev.panasovsky.module.auth.model.jwt.JWTRequest;
 import dev.panasovsky.module.auth.model.jwt.JWTResponse;
 import dev.panasovsky.module.auth.services.AuthService;
 import dev.panasovsky.module.auth.model.jwt.RefreshJWTRequest;
 
+import dev.panasovsky.module.auth.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
@@ -21,7 +23,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
+
+    @PostMapping("register")
+    public String register(@RequestBody final User user) {
+        return userService.register(user);
+    }
 
     @PostMapping("login")
     public ResponseEntity<JWTResponse> login(
