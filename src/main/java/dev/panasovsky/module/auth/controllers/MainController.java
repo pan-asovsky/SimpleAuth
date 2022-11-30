@@ -20,7 +20,10 @@ public class MainController {
     private final RoleRepository roleRepository;
 
 
+    // TODO: метод login() очень долгий - не менее 90мс. Разобраться и ускорить!
+    // TODO: явное указание роли при регистрации доступно всем ролям!
     // TODO: выдавать токен при регистрации?
+    // TODO: выдача JSON методами register(), login(), helloUser() и helloAdmin()
     // TODO: разобраться с SecurityConfig#filterChain()
 
 
@@ -41,7 +44,7 @@ public class MainController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/api/auth/addrole")
+    @PostMapping("/api/admin/addrole")
     public Role addRole(@RequestBody final Role role) {
         return roleRepository.save(role);
     }
