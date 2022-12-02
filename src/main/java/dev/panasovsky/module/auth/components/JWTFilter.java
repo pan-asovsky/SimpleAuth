@@ -25,6 +25,8 @@ public class JWTFilter extends GenericFilterBean {
 
     private final JWTUtils jwtUtils;
     private final JWTProvider jwtProvider;
+
+    private final static String BEARER = "Bearer ";
     private final static String AUTHORIZATION = "Authorization";
 
 
@@ -47,7 +49,7 @@ public class JWTFilter extends GenericFilterBean {
     private String getTokenFromRequest(final HttpServletRequest request) {
 
         final String bearer = request.getHeader(AUTHORIZATION);
-        if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearer) && bearer.startsWith(BEARER)) {
             return bearer.substring(7);
         }
 

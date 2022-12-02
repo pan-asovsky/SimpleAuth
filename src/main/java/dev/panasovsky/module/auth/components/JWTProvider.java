@@ -34,12 +34,17 @@ public class JWTProvider {
     @Value("${jwt.refresh.private}")
     private RSAPrivateKey jwtRefreshPrivate;
 
+    private final static int ACCESS_TOKEN_EXPIRATION_MINUTES = 7;
+    private final static int REFRESH_TOKEN_EXPIRATION_DAYS = 14;
+
 
     public String generateAccessToken(@NonNull final User user) {
 
         final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now.plusMinutes(5)
-                .atZone(ZoneId.systemDefault()).toInstant();
+        final Instant accessExpirationInstant = now
+                .plusMinutes(ACCESS_TOKEN_EXPIRATION_MINUTES)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
 
         return Jwts.builder()
@@ -54,8 +59,10 @@ public class JWTProvider {
     public String generateRefreshToken(@NonNull final User user) {
 
         final LocalDateTime now = LocalDateTime.now();
-        final Instant refreshExpirationInstant = now.plusDays(10)
-                .atZone(ZoneId.systemDefault()).toInstant();
+        final Instant refreshExpirationInstant = now
+                .plusDays(REFRESH_TOKEN_EXPIRATION_DAYS)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
         final Date refreshExpiration = Date.from(refreshExpirationInstant);
 
         return Jwts.builder()
