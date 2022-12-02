@@ -20,10 +20,10 @@ public class MainController {
     private final RoleRepository roleRepository;
 
 
-    // TODO: метод login() очень долгий - не менее 90мс. Разобраться и ускорить!
+    // TODO: метод encoder.matches() очень долгий. Надо попробовать найти решение.
     // TODO: явное указание роли при регистрации доступно всем ролям!
     // TODO: выдавать токен при регистрации?
-    // TODO: выдача JSON методами register(), login(), helloUser() и helloAdmin()
+    // TODO: выдача JSON методами register(), helloUser() и helloAdmin()
     // TODO: разобраться с SecurityConfig#filterChain()
 
 
