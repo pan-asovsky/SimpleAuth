@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"login\": \"vall-e\",\n    \"password\": \"vall-e\"\n}",
+					"raw": "{\n    \"login\": \"asovsky\",\n    \"password\": \"asovsky\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -56,7 +56,7 @@
 			"response": []
 		},
 		{
-			"name": "Validate correct login and JWT",
+			"name": "First validate",
 			"event": [
 				{
 					"listen": "test",
@@ -96,7 +96,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8083/api/hello/user",
+					"raw": "http://localhost:8083/api/hello/admin",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -105,7 +105,7 @@
 					"path": [
 						"api",
 						"hello",
-						"user"
+						"admin"
 					]
 				}
 			},
@@ -168,7 +168,10 @@
 							"pm.test(\"Status is ok, response is json\", function() {",
 							"    pm.response.to.be.ok;",
 							"    pm.response.to.be.json;",
-							"});"
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"newRefreshToken\", jsonData.refreshToken);"
 						],
 						"type": "text/javascript"
 					}
@@ -207,6 +210,53 @@
 						"api",
 						"auth",
 						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "access token from new refreshToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is ok, response is json\", function() {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"newAccessToken\", jsonData.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refreshToken\": \"{{newRefreshToken}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"auth",
+						"token"
 					]
 				}
 			},
