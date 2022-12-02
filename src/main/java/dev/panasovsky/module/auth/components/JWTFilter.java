@@ -27,6 +27,7 @@ public class JWTFilter extends GenericFilterBean {
     private final JWTProvider jwtProvider;
 
     private final static String BEARER = "Bearer ";
+    private final static int SUBSTRING_POSITION = 7;
     private final static String AUTHORIZATION = "Authorization";
 
 
@@ -50,7 +51,7 @@ public class JWTFilter extends GenericFilterBean {
 
         final String bearer = request.getHeader(AUTHORIZATION);
         if (StringUtils.hasText(bearer) && bearer.startsWith(BEARER)) {
-            return bearer.substring(7);
+            return bearer.substring(SUBSTRING_POSITION);
         }
 
         return null;

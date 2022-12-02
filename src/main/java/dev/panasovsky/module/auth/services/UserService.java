@@ -21,6 +21,8 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final static int USER_ROLE_ID = 2;
+
 
     @Override
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
@@ -50,7 +52,7 @@ public class UserService implements UserDetailsService {
     private void setUserRole(final User user) {
 
         final Role userRole = new Role();
-        userRole.setId(2);
+        userRole.setId(USER_ROLE_ID);
         userRole.setRolename("USER");
         user.setUser_role(userRole);
     }
