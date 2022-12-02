@@ -1,6 +1,4 @@
-package dev.panasovsky.module.auth.services;
-
-import dev.panasovsky.module.auth.model.User;
+package dev.panasovsky.module.auth.model;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,11 +16,13 @@ public class UserDetailsPrincipal implements UserDetails {
 
     private final User user;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         final List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority("ROLE_" + user.getUser_role().getRolename()));
+        roles.add(new SimpleGrantedAuthority(
+                "ROLE_" + user.getUser_role().getAuthority()));
         return roles;
     }
 

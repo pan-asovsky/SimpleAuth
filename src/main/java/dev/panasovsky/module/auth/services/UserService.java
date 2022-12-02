@@ -2,6 +2,7 @@ package dev.panasovsky.module.auth.services;
 
 import dev.panasovsky.module.auth.model.Role;
 import dev.panasovsky.module.auth.model.User;
+import dev.panasovsky.module.auth.model.UserDetailsPrincipal;
 import dev.panasovsky.module.auth.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,12 +13,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final static int USER_ROLE_ID = 2;
+
 
     @Override
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
@@ -26,19 +31,28 @@ public class UserService implements UserDetailsService {
         return new UserDetailsPrincipal(user);
     }
 
+    public User getByLogin(final String login) {
+        return userRepository.findByLogin(login);
+    }
+
+    public User getById(final String id) {
+        return userRepository.findById(UUID.fromString(id));
+
+    }
+
     public String register(final User user) {
 
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        if (user.getUser_role() == null) setRoleUser(user);
+        if (user.getUser_role() == null) setUserRole(user);
 
         final User addUser = addUser(user);
         return "Successfully registered " + addUser.getLogin();
     }
 
-    private void setRoleUser(final User user) {
+    private void setUserRole(final User user) {
 
         final Role userRole = new Role();
-        userRole.setId(2);
+        userRole.setId(USER_ROLE_ID);
         userRole.setRolename("USER");
         user.setUser_role(userRole);
     }

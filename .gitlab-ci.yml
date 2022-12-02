@@ -24,7 +24,7 @@ build:
 
 test:
   stage: test
-  only: 
+  only:
     - branches
   except:
     - tags
@@ -39,7 +39,7 @@ test:
 
 package:
   stage: package
-  only: 
+  only:
     - branches
   except:
     - tags

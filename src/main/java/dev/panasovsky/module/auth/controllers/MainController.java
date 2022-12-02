@@ -1,53 +1,52 @@
 package dev.panasovsky.module.auth.controllers;
 
 import dev.panasovsky.module.auth.model.Role;
-import dev.panasovsky.module.auth.model.User;
-import dev.panasovsky.module.auth.services.UserService;
+import dev.panasovsky.module.auth.services.AuthService;
+import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
 import dev.panasovsky.module.auth.repositories.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequiredArgsConstructor
 public class MainController {
 
-    private final UserService userService;
+    private final AuthService authService;
     private final RoleRepository roleRepository;
 
 
-    @GetMapping("/")
-    public String getHelloMessage() {
-        return "<h3>Hello!</h3>";
+    // TODO: метод encoder.matches() очень долгий. Надо попробовать найти решение.
+    // TODO: явное указание роли при регистрации доступно всем ролям!
+    // TODO: выдавать токен при регистрации?
+    // TODO: выдача JSON методами register(), helloUser() и helloAdmin()
+    // TODO: разобраться с SecurityConfig#filterChain()
+
+
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @GetMapping("/api/hello/user")
+    public ResponseEntity<String> helloUser() {
+
+        final JWTAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello user " + authInfo.getLogin() + "!");
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @GetMapping("/user")
-    public String getHelloMessageForUser() {
-        return "<h3>Hello, user!</h3>";
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/api/hello/admin")
+    public ResponseEntity<String> helloAdmin() {
+
+        final JWTAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello admin " + authInfo.getLogin() + "!");
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin")
-    public String getHelloMessageForAdmin() {
-        return "<h3>Hello, admin!</h3>";
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/addrole")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/api/admin/addrole")
     public Role addRole(@RequestBody final Role role) {
         return roleRepository.save(role);
-    }
-
-    @PostMapping("/register")
-    public String register(@RequestBody final User user) {
-        return userService.register(user);
     }
 
 }
