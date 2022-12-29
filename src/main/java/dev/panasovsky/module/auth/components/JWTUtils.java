@@ -1,8 +1,8 @@
 package dev.panasovsky.module.auth.components;
 
-import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
 import dev.panasovsky.module.auth.model.Role;
-import dev.panasovsky.module.auth.repositories.RoleRepository;
+import dev.panasovsky.module.auth.services.RoleService;
+import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.HashSet;
 @RequiredArgsConstructor
 public class JWTUtils {
 
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
 
     public JWTAuthentication generate(final Claims claims) {
@@ -33,7 +33,7 @@ public class JWTUtils {
         final String rolename = claims.get("role", String.class);
 
         final Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByRolename(rolename));
+        roles.add(roleService.findByRolename(rolename));
         return roles;
     }
 

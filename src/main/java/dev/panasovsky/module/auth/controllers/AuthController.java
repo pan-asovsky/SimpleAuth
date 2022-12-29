@@ -7,9 +7,10 @@ import dev.panasovsky.module.auth.services.AuthService;
 import dev.panasovsky.module.auth.model.jwt.JWTResponse;
 import dev.panasovsky.module.auth.model.jwt.RefreshJWTRequest;
 
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.ResponseEntity;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,10 @@ public class AuthController {
 
 
     @PostMapping("register")
-    public String register(@RequestBody final User user) {
-        return userService.register(user);
+    public ResponseEntity<JsonNode> register(@RequestBody final User user) {
+
+        final JsonNode result = userService.register(user);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("login")
