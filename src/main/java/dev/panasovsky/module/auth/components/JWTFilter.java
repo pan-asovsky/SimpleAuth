@@ -37,6 +37,8 @@ public class JWTFilter extends GenericFilterBean {
                          final FilterChain filterChain) throws IOException, ServletException {
 
         final String token = getTokenFromRequest((HttpServletRequest) request);
+
+        // TODO: обработка исключений и выдача JsonResponse на 500
         if (token != null && jwtProvider.validateAccessToken(token)) {
             final Claims claims = jwtProvider.getAccessClaims(token);
             final JWTAuthentication jwtInfoToken = jwtUtils.generate(claims);

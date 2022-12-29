@@ -1,14 +1,14 @@
 package dev.panasovsky.module.auth.controllers;
 
 import dev.panasovsky.module.auth.model.Role;
-import dev.panasovsky.module.auth.services.AuthService;
-import dev.panasovsky.module.auth.model.jwt.JWTAuthentication;
-import dev.panasovsky.module.auth.repositories.RoleRepository;
+import dev.panasovsky.module.auth.services.RoleService;
+import dev.panasovsky.module.auth.util.JsonConvertHelper;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final AuthService authService;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
+
+    private final static String hello = "hello!";
+    private final static String success = "success";
 
 
-    // TODO: метод encoder.matches() очень долгий. Надо попробовать найти решение.
     // TODO: явное указание роли при регистрации доступно всем ролям!
     // TODO: выдавать токен при регистрации?
     // TODO: выдача JSON методами register(), helloUser() и helloAdmin()
@@ -29,24 +30,26 @@ public class MainController {
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @GetMapping("/api/hello/user")
-    public ResponseEntity<String> helloUser() {
+    public ResponseEntity<JsonNode> helloUser() {
 
-        final JWTAuthentication authInfo = authService.getAuthInfo();
-        return ResponseEntity.ok("Hello user " + authInfo.getLogin() + "!");
+        final JsonNode result = JsonConvertHelper.getJsonResponse(success, hello);
+        return ResponseEntity.ok(result);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/api/hello/admin")
-    public ResponseEntity<String> helloAdmin() {
+    public ResponseEntity<JsonNode> helloAdmin() {
 
-        final JWTAuthentication authInfo = authService.getAuthInfo();
-        return ResponseEntity.ok("Hello admin " + authInfo.getLogin() + "!");
+        final JsonNode result = JsonConvertHelper.getJsonResponse(success, hello);
+        return ResponseEntity.ok(result);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/api/admin/addrole")
-    public Role addRole(@RequestBody final Role role) {
-        return roleRepository.save(role);
+    public ResponseEntity<JsonNode> addRole(@RequestBody final Role role) {
+
+        final JsonNode result = roleService.save(role);
+        return ResponseEntity.ok(result);
     }
 
 }
