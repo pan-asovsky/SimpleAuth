@@ -111,6 +111,7 @@
     </dependencies>
 
     <build>
+        <finalName>auth-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -140,22 +141,29 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <build.profile.id>dev</build.profile.id>
-                <profileActive>dev</profileActive>
+                <build.profile.id>test</build.profile.id>
+                <profileActive>test</profileActive>
             </properties>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>base</id>
             <properties>
-                <build.profile.id>prod</build.profile.id>
-                <profileActive>prod</profileActive>
+                <build.profile.id>local</build.profile.id>
+                <profileActive>local</profileActive>
             </properties>
         </profile>
+        <profile>
+        <id>deploy</id>
+        <properties>
+            <build.profile.id>prod</build.profile.id>
+            <profileActive>prod</profileActive>
+        </properties>
+    </profile>
     </profiles>
 
 </project>
