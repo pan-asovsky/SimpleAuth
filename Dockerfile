@@ -2,7 +2,7 @@ FROM eclipse-temurin:17 as app-build
 ENV RELEASE=17
 WORKDIR /opt/build
 
-COPY ./target/auth-service-*.jar ./application.jar
+COPY ./target/auth-service.jar ./application.jar
 
 RUN java -Djarmode=layertools -jar application.jar extract
 RUN $JAVA_HOME/bin/jlink \
