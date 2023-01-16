@@ -1,7 +1,6 @@
-package dev.panasovsky.module.auth.components;
+package dev.panasovsky.module.auth.services;
 
 import dev.panasovsky.module.auth.model.Role;
-import dev.panasovsky.module.auth.services.RoleService;
 import dev.panasovsky.module.auth.events.RoleSavingEvent;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,7 +15,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.context.event.EventListener;
 
 import java.util.Set;
@@ -26,9 +25,9 @@ import java.util.Objects;
 
 
 @Log4j2
-@Component
+@Service
 @RequiredArgsConstructor
-public class KafkaProducer {
+public class KafkaService {
 
     private final static String ROLE_TOPIC = "roles";
 
@@ -62,8 +61,8 @@ public class KafkaProducer {
     }
 
     // TODO: обработка исключений
-    // по текущему сценарию исключения выбрасываться не должны,
-    // поэтому пока оставляю так.
+    //  по текущему сценарию исключения выбрасываться не должны,
+    //  поэтому пока оставляю так.
     @SneakyThrows
     private JsonNode setToJson(final Set<?> value) {
 
