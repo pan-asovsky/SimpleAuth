@@ -27,7 +27,7 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final static int USER_ROLE_ID = 2;
+    private final static int USER_ROLE_ID = 3;
     private final static String ROLE_NAME = "USER";
 
 
