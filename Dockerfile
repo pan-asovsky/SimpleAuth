@@ -2,11 +2,11 @@ FROM eclipse-temurin:17 as app-build
 ENV RELEASE=17
 WORKDIR /opt/build
 
-COPY ./target/auth-service.jar ./application.jar
+COPY ./target/auth-service.jar ./auth-service.jar
 
-RUN java -Djarmode=layertools -jar application.jar extract
+RUN java -Djarmode=layertools -jar auth-service.jar extract
 RUN $JAVA_HOME/bin/jlink \
-         --add-modules `jdeps --ignore-missing-deps -q -recursive --multi-release ${RELEASE} --print-module-deps -cp 'dependencies/BOOT-INF/lib/*' application.jar` \
+         --add-modules `jdeps --ignore-missing-deps -q -recursive --multi-release ${RELEASE} --print-module-deps -cp 'dependencies/BOOT-INF/lib/*' auth-service.jar` \
          --strip-debug \
          --no-man-pages \
          --no-header-files \
